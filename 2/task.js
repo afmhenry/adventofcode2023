@@ -8,7 +8,7 @@ console.log("Full Result: ", firstTask("full"), ". Expected", 2545);
 
 console.log("Task 2");
 console.log("Sample Result: ", secondTask("sample"), ". Expected", 2286);
-console.log("Full Result: ", secondTask("full"), ". Expected", 53974);
+console.log("Full Result: ", secondTask("full"), ". Expected", 78111);
 
 function firstTask(filename) {
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();

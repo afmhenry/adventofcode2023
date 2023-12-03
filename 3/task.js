@@ -9,9 +9,7 @@ console.log("Full: Expected 525119. Result: ", firstTask("full"));
 
 console.log("Task 2");
 console.log("Sample: Expected 467835. Result", secondTask("sample"));
-console.log("Full: Expected ??. Result", secondTask("full"));
-
-//76504829
+console.log("Full: Expected 76504829. Result", secondTask("full"));
 
 function firstTask(filename) {
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();

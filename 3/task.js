@@ -8,8 +8,10 @@ console.log("Sample: Expected 4148. Result:", firstTask("sample-2"));
 console.log("Full: Expected 525119. Result: ", firstTask("full"));
 
 console.log("Task 2");
-console.log("Sample Result: ", secondTask("sample"), ". Expected", 2286);
-//console.log("Full Result: ", secondTask("full"), ". Expected", 78111);
+console.log("Sample: Expected 467835. Result", secondTask("sample"));
+console.log("Full: Expected ??. Result", secondTask("full"));
+
+//76504829
 
 function firstTask(filename) {
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();
@@ -169,18 +171,20 @@ function secondTask(filename) {
       }
     });
   });
-  console.log(
-    symbols.filter((possibleGear) => {
-      return partIds.filter((partId) =>
-        partId.locations.find((partIdLocation) =>
-          possibleGear.find(
-            (gearPart) =>
-              gearPart.x === partIdLocation.x && gearPart.y === partIdLocation.y
-          )
+  symbols.filter((possibleGear) => {
+    const parts = partIds.filter((partId) =>
+      partId.locations.find((partIdLocation) =>
+        possibleGear.find(
+          (gearPart) =>
+            gearPart.x === partIdLocation.x && gearPart.y === partIdLocation.y
         )
-      ).length === 2;
-    })
-  );
+      )
+    );
+    if (parts.length === 2) {
+      sum += parts.map((e) => e.value).reduce((a, b) => a * b);
+      return true;
+    }
+  });
 
   return sum;
 }

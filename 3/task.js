@@ -18,7 +18,7 @@ function firstTask(filename) {
   const inputAsRows = input.split("\n");
   let partIds = [];
   let symbols = [];
-  inputAsRows.forEach((row, y) => {
+  inputAsRows.forEach((row) => {
     if (!row) return;
     matrix.push(row.split(""));
   });
@@ -108,7 +108,7 @@ function secondTask(filename) {
   const inputAsRows = input.split("\n");
   let partIds = [];
   let symbols = [];
-  inputAsRows.forEach((row, y) => {
+  inputAsRows.forEach((row) => {
     if (!row) return;
     matrix.push(row.split(""));
   });

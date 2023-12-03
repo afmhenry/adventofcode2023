@@ -46,7 +46,7 @@ function secondTask(filename) {
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();
   let sum = 0;
   const inputAsRows = input.split("\n");
-  inputAsRows.forEach((row, i) => {
+  inputAsRows.forEach((row) => {
     if (!row) return;
     let rounds = row.split(":")[1].split(";");
     const maxColorCount = { blue: 0, red: 0, green: 0 };

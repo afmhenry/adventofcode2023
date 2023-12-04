@@ -86,8 +86,6 @@ function secondTaskButBetter(filename) {
     const countOfWinners = findWinners(row).length;
     winningIndicies.push({ index: i, countOfWinners });
   });
-  console.log(winningIndicies.map((e) => e.countOfWinners));
-
   const reversedCards = winningIndicies.reverse();
   reversedCards.forEach((card, i) => {
     let addedCards = 1;

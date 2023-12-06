@@ -20,7 +20,7 @@ function waysToWinRace(race) {
   const { time, distanceToWin } = race;
   let waysToWin = 0;
   for (var i = 0; time > i; i++) {
-    const speed = i || 0;
+    const speed = i;
     const distance = speed * (time - i);
     if (distance > distanceToWin) {
       waysToWin++;

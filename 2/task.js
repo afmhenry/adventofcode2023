@@ -2,13 +2,22 @@ import fs from "fs";
 
 const day = 2;
 const validCase = { red: 12, green: 13, blue: 14 };
-console.log("Task 1");
-console.log("Sample Result: ", firstTask("sample"), ". Expected", 8);
-console.log("Full Result: ", firstTask("full"), ". Expected", 2545);
 
-console.log("Task 2");
-console.log("Sample Result: ", secondTask("sample"), ". Expected", 2286);
-console.log("Full Result: ", secondTask("full"), ". Expected", 78111);
+function runTask(stage, filename, task, expected) {
+  console.log(`\nTask ${stage} - ${filename}`);
+  console.time(`\tTimer`);
+  const result = task(filename);
+  console.timeEnd(`\tTimer`);
+  console.log(`\tExpected ${expected}`);
+  console.log(`\tResult: ${result}`);
+  console.log(`\tPass: ${result === expected}\n`);
+}
+runTask("1", "sample", firstTask, 8);
+runTask("1", "full", firstTask, 2545);
+
+runTask("2", "sample", secondTask, 2286);
+runTask("2", "full", secondTask, 78111);
+
 
 function firstTask(filename) {
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();
@@ -65,7 +74,6 @@ function secondTask(filename) {
       if (!maxColorCount[color]) return;
       power = power * maxColorCount[color];
     });
-    console.log(maxColorCount);
     sum += power;
   });
   return sum;

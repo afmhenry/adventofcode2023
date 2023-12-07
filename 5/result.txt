@@ -1,0 +1,23 @@
+
+Task 1 - sample
+	Timer: 1ms
+	Expected 35
+	Result: 35
+	Pass: true
+
+
+Task 1 - full
+	Timer: 0.907ms
+	Expected 3374647
+	Result: 3374647
+	Pass: true
+
+
+Task 2 - sample
+{ seedStart: 79, range: 14 }
+{ seedStart: 55, range: 13 }
+	Timer: 1.328ms
+	Expected 46
+	Result: 0
+	Pass: false
+

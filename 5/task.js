@@ -100,8 +100,8 @@ function secondTask(filename) {
       mappings[currentMap].push({ destRange, sourceRange, rangeLength });
     }
   });
-  seeds.forEach((seedDetails) => {
-    console.log(seedDetails);
-  });
+  // seeds.forEach((seedDetails) => {
+  //   console.log(seedDetails);
+  // });
   return 0;
 }

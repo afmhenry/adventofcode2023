@@ -3,14 +3,21 @@ import fs from "fs";
 const day = 4;
 const entriesFromAInB = (a, b) => a.filter((e) => b.includes(e));
 
-console.log("Task 1");
-console.log("Sample: Expected 13. Result:", firstTask("sample"));
-console.log("Full: Expected 20117. Result: ", firstTask("full"));
+function runTask(stage, filename, task, expected) {
+  console.log(`\nTask ${stage} - ${filename}`);
+  console.time(`\tTimer`);
+  const result = task(filename);
+  console.timeEnd(`\tTimer`);
+  console.log(`\tExpected ${expected}`);
+  console.log(`\tResult: ${result}`);
+  console.log(`\tPass: ${result === expected}\n`);
+}
+runTask("1", "sample", firstTask, 13);
+runTask("1", "full", firstTask, 20117);
 
-console.log("Task 2");
-console.log("Sample: Expected 30. Result", secondTask("sample"));
-console.log("Full: Expected 13768818. Result", secondTask("full"));
-console.log("Full: Expected 13768818. Result", secondTaskButBetter("full"));
+runTask("2", "sample", secondTask, 30);
+runTask("2", "full", secondTaskButBetter, 13768818);
+runTask("2", "full", secondTask, 13768818);
 
 function firstTask(filename) {
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();
@@ -36,7 +43,6 @@ function firstTask(filename) {
 
 function secondTask(filename) {
   // start a timer
-  console.time("secondTask");
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();
   const inputAsRows = input.split("\n");
   const winningIndicies = [];
@@ -69,15 +75,12 @@ function secondTask(filename) {
 
   const sum = result.reduce((acc, e) => acc + e.length, winningIndicies.length);
   //traverseCards(winningIndicies);
-  console.timeEnd("secondTask");
-
   return sum;
   // end timer
 }
 
 function secondTaskButBetter(filename) {
   // start a timer
-  console.time("secondTaskButBetter");
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();
   const inputAsRows = input.split("\n");
   const winningIndicies = [];
@@ -94,7 +97,6 @@ function secondTaskButBetter(filename) {
     card.addedCards = addedCards;
   });
   const result = reversedCards.reduce((acc, e) => acc + e.addedCards, 0);
-  console.timeEnd("secondTaskButBetter");
 
   return result;
 }

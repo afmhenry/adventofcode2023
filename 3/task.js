@@ -1,15 +1,22 @@
 import fs from "fs";
 
 const day = 3;
+function runTask(stage, filename, task, expected) {
+  console.log(`\nTask ${stage} - ${filename}`);
+  console.time(`\tTimer`);
+  const result = task(filename);
+  console.timeEnd(`\tTimer`);
+  console.log(`\tExpected ${expected}`);
+  console.log(`\tResult: ${result}`);
+  console.log(`\tPass: ${result === expected}\n`);
+}
+runTask("1", "sample", firstTask, 4361);
+runTask("1", "sample-2", firstTask, 4148);
+runTask("1", "full", firstTask, 525119);
 
-console.log("Task 1");
-console.log("Sample: Expected 4361. Result:", firstTask("sample"));
-console.log("Sample: Expected 4148. Result:", firstTask("sample-2"));
-console.log("Full: Expected 525119. Result: ", firstTask("full"));
+runTask("2", "sample", secondTask, 467835);
+runTask("2", "full", secondTask, 76504829);
 
-console.log("Task 2");
-console.log("Sample: Expected 467835. Result", secondTask("sample"));
-console.log("Full: Expected 76504829. Result", secondTask("full"));
 
 function firstTask(filename) {
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();

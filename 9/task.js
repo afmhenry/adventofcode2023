@@ -11,10 +11,10 @@ function runTask(stage, filename, task, expected) {
   console.log(`\tPass: ${result === expected}\n`);
 }
 
-//runTask("1", "sample", firstTask, 114);
-//runTask("1", "full", firstTask, 18673);
+runTask("1", "sample", firstTask, 114);
+runTask("1", "full", firstTask, 18673);
 runTask("2", "sample", secondTask, 2);
-runTask("2", "full", secondTask, 17972669116327);
+runTask("2", "full", secondTask, 948);
 
 function firstTask(filename) {
   let result = 0;
@@ -70,7 +70,6 @@ function secondTask(filename) {
       iter.unshift(iter[0] - incrementBy);
     });
     result += revEntry.slice(-1)[0][0];
-    //console.log(revEntry);
   });
 
   return result;

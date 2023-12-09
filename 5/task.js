@@ -14,14 +14,14 @@ runTask("1", "sample", firstTask, 35);
 runTask("1", "full", firstTask, 3374647);
 
 runTask("2", "sample", secondTask, 46);
-//runTask("2", "full", secondTask, 46);
+
+runTask("2", "full", secondTask, 46);
 
 function firstTask(filename) {
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();
   const inputAsRows = input.split("\n");
   let seeds = [];
   let mappings = {};
-  let map = {};
   let currentMap = "";
   inputAsRows.forEach((row) => {
     if (!row) return;
@@ -48,8 +48,7 @@ function firstTask(filename) {
   });
   const locations = [];
   seeds.forEach((seed) => {
-    const originalSeed = seed;
-    map[originalSeed] = {};
+    //map[originalSeed] = {};
     Object.keys(mappings).forEach((key) => {
       let seedChanged = false;
       mappings[key].forEach((mapping) => {
@@ -73,7 +72,7 @@ function secondTask(filename) {
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();
   const inputAsRows = input.split("\n");
   let seeds = [];
-  let newSeeds = [];
+  const locations = [];
   let mappings = {};
   let currentMap = "";
   inputAsRows.forEach((row) => {
@@ -84,8 +83,8 @@ function secondTask(filename) {
         .trim()
         .split(" ")
         .map((e) => parseInt(e));
-      for (var i = 0; seedInput[i]; i += 2) {
-        seeds.push({ seedStart: seedInput[i], range: seedInput[i + 1] });
+      for (var i = 0; seedInput[i] !== undefined; i += 2) {
+        seeds.push({ startSeed: seedInput[i], range: seedInput[i + 1] });
       }
       return;
     }
@@ -100,8 +99,27 @@ function secondTask(filename) {
       mappings[currentMap].push({ destRange, sourceRange, rangeLength });
     }
   });
-  // seeds.forEach((seedDetails) => {
-  //   console.log(seedDetails);
-  // });
-  return 0;
+  seeds.forEach((seed) => {
+    const { startSeed, range } = seed;
+    for (var i in [...Array(range)]) {
+      let newSeed = startSeed + parseInt(i);
+      Object.keys(mappings).forEach((key) => {
+        let seedChanged = false;
+        mappings[key].forEach((mapping) => {
+          if (seedChanged) return;
+
+          const { destRange, sourceRange, rangeLength } = mapping;
+          if (sourceRange <= newSeed && newSeed < sourceRange + rangeLength) {
+            newSeed = destRange + newSeed - sourceRange;
+            seedChanged = true;
+          }
+        });
+        //map[originalSeed][key] = seed;
+        if (key === "humidity-to-location") {
+          locations.push(newSeed);
+        }
+      });
+    }
+  });
+  return Math.min(...locations);
 }

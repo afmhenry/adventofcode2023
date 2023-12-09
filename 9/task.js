@@ -49,3 +49,29 @@ function produceDelta(array) {
   });
   return delta;
 }
+
+function secondTask(filename) {
+  let result = 0;
+  const input = fs.readFileSync(`${day}/${filename}.txt`).toString();
+  const inputAsRows = input.split("\n");
+  inputAsRows.forEach((row, i) => {
+    let pyrEntry = [];
+    if (!row) return;
+    const values = row.split(" ").map((e) => parseInt(e));
+    let prevDelta = values;
+    while (true) {
+      pyrEntry.push(prevDelta);
+      if (prevDelta.filter((e) => e !== 0).length === 0) break;
+      prevDelta = produceDelta(prevDelta);
+    }
+    const revEntry = pyrEntry.reverse();
+    revEntry.forEach((iter, j) => {
+      const incrementBy = (revEntry?.[j - 1] || [0]).slice(1)[0];
+      iter.push(iter.slice(1)[0] + incrementBy);
+    });
+    result += revEntry.slice(-1)[0].slice(1)[0];
+  });
+
+  return result;
+}
+

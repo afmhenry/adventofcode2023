@@ -20,7 +20,7 @@ function firstTask(filename) {
   let result = 0;
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();
   const inputAsRows = input.split("\n");
-  inputAsRows.forEach((row, i) => {
+  inputAsRows.forEach((row) => {
     let pyrEntry = [];
     if (!row) return;
     const values = row.split(" ").map((e) => parseInt(e));
@@ -54,7 +54,7 @@ function secondTask(filename) {
   let result = 0;
   const input = fs.readFileSync(`${day}/${filename}.txt`).toString();
   const inputAsRows = input.split("\n");
-  inputAsRows.forEach((row, i) => {
+  inputAsRows.forEach((row) => {
     let pyrEntry = [];
     if (!row) return;
     const values = row.split(" ").map((e) => parseInt(e));
@@ -71,6 +71,5 @@ function secondTask(filename) {
     });
     result += revEntry.slice(-1)[0][0];
   });
-
   return result;
 }

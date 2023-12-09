@@ -11,10 +11,10 @@ function runTask(stage, filename, task, expected) {
   console.log(`\tPass: ${result === expected}\n`);
 }
 
-runTask("1", "sample", firstTask, 114);
-runTask("1", "full", firstTask, 18673);
-/* runTask("2", "sample-3", secondTask, 6);
-runTask("2", "full", secondTask, 17972669116327);  */
+//runTask("1", "sample", firstTask, 114);
+//runTask("1", "full", firstTask, 18673);
+runTask("2", "sample", secondTask, 2);
+runTask("2", "full", secondTask, 17972669116327);
 
 function firstTask(filename) {
   let result = 0;
@@ -66,12 +66,12 @@ function secondTask(filename) {
     }
     const revEntry = pyrEntry.reverse();
     revEntry.forEach((iter, j) => {
-      const incrementBy = (revEntry?.[j - 1] || [0]).slice(1)[0];
-      iter.push(iter.slice(1)[0] + incrementBy);
+      const incrementBy = (revEntry?.[j - 1] || [0])[0];
+      iter.unshift(iter[0] - incrementBy);
     });
-    result += revEntry.slice(-1)[0].slice(1)[0];
+    result += revEntry.slice(-1)[0][0];
+    //console.log(revEntry);
   });
 
   return result;
 }
-

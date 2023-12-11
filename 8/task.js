@@ -37,7 +37,6 @@ function firstTask(filename) {
     map[location] = { R, L };
   });
   let i = 0;
-  // eslint-disable-next-line no-constant-condition
   let prevLocation = currentLocation;
   let result = 0;
   for (i = 0; true; i++) {
@@ -72,7 +71,6 @@ function secondTask(filename) {
     allLocations.push(location);
   });
   let i = 0;
-  let locationHitZ;
   let startingLocations = allLocations.filter((e) => e.endsWith("A"));
   // eslint-disable-next-line no-constant-condition
   let hitZ = [];

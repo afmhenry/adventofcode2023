@@ -52,9 +52,6 @@ function firstTask(filename) {
       start = { x: startingX, y };
     }
   });
-  // determine location of s
-  // follow each path, replacing previous node with count
-  // when next node is a known node, stop
   //console.log(translatedInput.map((e) => e.join("")).join("\n"));
   let current = start;
   let index = 0;
@@ -68,7 +65,7 @@ function firstTask(filename) {
     if (nextNodes.length === 0) break;
     prevNodes = nextNodes;
   }
-  //console.log(translatedInput.map((e) => e.join("")).join("\n"));
+  console.log(translatedInput.map((e) => e.join("")).join("\n"));
   return index;
 }
 
@@ -109,7 +106,7 @@ function findNextNodes(current, i) {
     });
     return directions.length;
   });
-  translatedInput[y][x] = i;
+  translatedInput[y][x] = "X";
 
   return nextNodes;
 }

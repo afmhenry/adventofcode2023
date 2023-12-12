@@ -38,7 +38,7 @@ function firstTask(filename) {
       row = row.map((e) => {
         if (e === "#") {
           let id = galaxies.length + 1;
-          galaxies.push(id);
+          galaxies.push({ id });
           return id;
         } else {
           return e;
@@ -51,10 +51,10 @@ function firstTask(filename) {
     matrix.push(row);
   });
   const galaxyPairs = galaxies.flatMap((v, i) =>
-    galaxies.slice(i + 1).map((w) => v + " " + w)
+    galaxies.slice(i + 1).map((w) => v.id + " " + w.id)
   );
+
   const emptyColumn = [];
-  let expandedColIndex = 0;
   expandedMatrix[0].forEach((_, i) => {
     if (expandedMatrix.filter((e) => e[i] !== ".").length === 0) {
       emptyColumn.push(i);
@@ -65,7 +65,16 @@ function firstTask(filename) {
       (e, i) => (expandedMatrix[i] = insert(e, newColIndex, "."))
     );
   });
-  console.log(galaxyPairs);
+  // get the position of each galaxy in the expanded matrix
+  galaxies.forEach((galaxy) => {
+    galaxy.position ||= {};
+    galaxy.position.x = expandedMatrix.findIndex((e) => e.includes(galaxy.id));
+    console.log(galaxy.id, expandedMatrix);
+    galaxy.position.y = expandedMatrix[galaxy.position.x].findIndex(
+      (e) => e === galaxy.id
+    );
+  });
+  console.log(galaxies);
   console.log(expandedMatrix.map((e) => e.join("")).join("\n"));
 
   return result;

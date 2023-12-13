@@ -1,0 +1,28 @@
+
+Task 1 - sample
+	Timer: 2.028ms
+	Expected 374
+	Result: 374
+	Pass: true
+
+
+Task 1 - full
+	Timer: 212.992ms
+	Expected 9918828
+	Result: 9918828
+	Pass: true
+
+
+Task 2 - sample
+	Timer: 0.546ms
+	Expected 82000210
+	Result: 82000210
+	Pass: true
+
+
+Task 2 - full
+	Timer: 223.309ms
+	Expected 692506533832
+	Result: 692506533832
+	Pass: true
+

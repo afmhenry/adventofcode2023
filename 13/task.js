@@ -12,8 +12,8 @@ function runTask(stage, filename, task, expected) {
 }
 
 runTask("1", "sample", firstTask, 405);
-runTask("1", "sample-2", firstTask, 405);
-//runTask("1", "full", firstTask, 18673);
+//runTask("1", "sample-2", firstTask, 405);
+runTask("1", "full", firstTask, 18673);
 // 25991 too low
 // 28927 too high
 // not 19223
@@ -28,14 +28,17 @@ function firstTask(filename) {
     if (!set) return;
     const matrix = set.split("\n"); //.map((e) => e.split(""));
     let setResult = 0;
+    //console.log("rows", num);
+
     setResult += findReflection(matrix, 100);
     const transposed = transpose(matrix.map((e) => e.split(""))).map((e) =>
       e.join("")
     );
+    //console.log("cols", num);
     //console.log(transposed.join("\n"));
     setResult += findReflection(transposed, 1);
     if (setResult) {
-      console.log(num, setResult + "\n" + matrix.join("\n"));
+      //console.log(num, setResult + "\n" + matrix.join("\n"));
     }
     result += setResult;
   });
@@ -49,28 +52,29 @@ function transpose(matrix) {
 
 function findReflection(matrix, mult = 1) {
   let largestReflection = 0;
-  for (var i = 1; i < matrix.length; i++) {
+  for (var i = 0; i < matrix.length; i++) {
     if (matrix[i] === matrix[i + 1]) {
-      let j = 1;
+      let j = 0;
       let reflection = false;
 
       while (true) {
         const [up, down] = [matrix[i + 1 + j], matrix[i - j]];
-        if (!up || !down) break;
-        j++;
-
-        if (up === down) {
-          reflection = true;
+        if (!up || !down) {
+          break;
         }
         if (up !== down) {
           reflection = false;
           break;
         }
+        if (up === down) {
+          reflection = true;
+        }
+        j++;
       }
       let reflectionVal = (i + 1) * mult;
-      if (reflection && largestReflection < reflectionVal) {
-        //console.log(i + 1, matrix[i + 1]);
-        largestReflection = reflectionVal;
+      if (reflection) {
+        //console.log(i, j, "\n" + matrix.slice(i - j, i + 1 + j).join("\n"));
+        largestReflection += reflectionVal;
       }
     }
   }

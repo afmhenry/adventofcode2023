@@ -22,9 +22,21 @@ function firstTask(filename) {
   const inputAsRows = input.split("\n");
   inputAsRows.forEach((row) => {
     if (!row) return;
+    let [springs, rule] = row.split(" ");
+    rule = rule.split(",");
+    springs = springs.split(".");
+    springPermutations(springs, rule);
   });
 
   return result;
+}
+
+function springPermutations(springs, rule) {
+  let ruleMatch = 0;
+  springs.forEach((e, i) => {
+   
+    
+  });
 }
 function secondTask(filename) {
   let result = 0;

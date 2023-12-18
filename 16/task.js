@@ -49,7 +49,16 @@ function firstTask(filename) {
     const [x, y, dx, dy] = state;
     const node = matrix?.[y]?.[x];
     if (!node) return;
-    temp[y][x] = "#";
+    if (temp[y][x] === 10000) {
+      return;
+    }
+    if (temp[y][x] === "#") {
+      temp[y][x] = 1;
+    } else if (temp[y][x] >= 1) {
+      temp[y][x] += 1;
+    } else {
+      temp[y][x] = "#";
+    }
 
     if (node === ".") {
       if (!matrix?.[y + dy]?.[x + dx]) return;
@@ -74,15 +83,14 @@ function firstTask(filename) {
     });
     if (next.length === 0) break;
     prev = next;
-    if (next.length > 1000000) break;
   }
   console.log(temp.map((e) => e.join("")).join("\n"));
-  return (
-    temp
-      .map((e) => e.join(""))
-      .join("")
-      .split("#").length - 1
-  );
+  // for each # or number, add to result
+  temp.forEach((row) => {
+    row.forEach((e) => {
+      if (e === "#" || e >= 1) result += 1;
+    });
+  });
   return result;
 }
 
@@ -116,8 +124,9 @@ function runTask(stage, filename, task, expected) {
 }
 
 runTask("1", "sample", firstTask, 46);
-runTask("1", "full", firstTask, 18673);
+runTask("1", "full", firstTask, 7728);
 // 6361 too low
-// 7368 too low
+// not 6882
+// 7663?
 // runTask("2", "sample", secondTask, 2);
 // runTask("2", "full", secondTask, 948);

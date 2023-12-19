@@ -60,19 +60,35 @@ function firstTask(filename) {
     const [x, y, color] = node;
     matrix[y - minY][x - minX] = "#";
   });
-  console.log(matrix.map((e) => e.join(" ")).join("\n"));
+  //console.log(matrix.map((e) => e.join(" ")).join("\n"));
 
   matrix.forEach((row) => {
     // get indexes of #
     const walls = [];
     let wallActive = false;
     // fill in the walls
-    let prev = 
-    row.forEach((e) => {
-     
+    const wallMatches = row.join("").match(/#*/g);
+    wallMatches.pop();
+    let count = 0;
+    // get the index of the last entry containing any number of #
+
+    const lastWallIndex = wallMatches.findLastIndex((e) => e.length);
+
+    wallMatches.forEach((match, i) => {
+      if (i > lastWallIndex) {
+        return;
+      }
+      if (match.length && !wallActive) {
+        wallActive = true;
+        count += match.length;
+      } else if (match.length && wallActive) {
+        count += match.length;
+        wallActive = false;
+      } else if (match.length === 0 && wallActive) {
+        count++;
+      }
     });
-    console.log(walls.join(""));
-    result += walls.length;
+    result += count;
   });
   return result;
 }
@@ -98,7 +114,9 @@ function runTask(stage, filename, task, expected) {
   console.log(`\tPass: ${result === expected}\n`);
 }
 
-runTask("1", "sample", firstTask, 114);
-//runTask("1", "full", firstTask, 18673);
+runTask("1", "sample", firstTask, 62);
+runTask("1", "full", firstTask, 47767);
+// 47767 too high
+// 44575 too low
 // runTask("2", "sample", secondTask, 2);
 // runTask("2", "full", secondTask, 948);

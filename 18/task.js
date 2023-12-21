@@ -60,36 +60,88 @@ function firstTask(filename) {
     const [x, y, color] = node;
     matrix[y - minY][x - minX] = "#";
   });
-  //console.log(matrix.map((e) => e.join(" ")).join("\n"));
-
-  matrix.forEach((row) => {
+  console.log(matrix.map((e) => e.join("")).join("\n"));
+  const copy = structuredClone(matrix);
+  matrix.forEach((row, i) => {
     // get indexes of #
     const walls = [];
     let wallActive = false;
-    // fill in the walls
-    const wallMatches = row.join("").match(/#*/g);
-    wallMatches.pop();
     let count = 0;
-    // get the index of the last entry containing any number of #
 
-    const lastWallIndex = wallMatches.findLastIndex((e) => e.length);
+    // fill in the walls
+    let wallStartShape = "";
+    let wallEndShape = "";
+    const lastWallIndex = row.lastIndexOf("#");
+    for (let j = 0; j < row.length; j++) {
+      let didMove = false;
 
-    wallMatches.forEach((match, i) => {
-      if (i > lastWallIndex) {
-        return;
+      if (j > lastWallIndex) continue;
+      if (row[j] === "#" && !wallActive) {
+        const near = (matrix[i - 1]?.[j] || ".") + (matrix[i + 1]?.[j] || ".");
+        if (near.includes("#")) {
+          wallActive = true;
+          wallStartShape = near;
+        }
+        count += 1;
+
+        while (true) {
+          if (row[j + 1] === "#") {
+            count += 1;
+            j++;
+            didMove = true;
+            copy[i][j] = "#";
+          } else {
+            wallEndShape =
+              (matrix[i - 1]?.[j] || ".") + (matrix[i + 1]?.[j] || ".");
+            break;
+          }
+        }
+        if (didMove && wallStartShape === wallEndShape) {
+          wallActive = false;
+        }
+        wallStartShape = wallEndShape;
+      } else if (wallActive) {
+        if (row[j] === ".") {
+          count += 1;
+          copy[i][j] = "#";
+          while (true) {
+            if (row[j + 1] === ".") {
+              count += 1;
+              j++;
+              copy[i][j] = "#";
+            } else {
+              break;
+            }
+          }
+        } else {
+          count += 1;
+          wallStartShape =
+            (matrix[i - 1]?.[j] || ".") + (matrix[i + 1]?.[j] || ".");
+          while (true) {
+            if (row[j + 1] === "#") {
+              count += 1;
+              j++;
+              copy[i][j] = "#";
+              didMove = true;
+            } else {
+              wallEndShape =
+                (matrix[i - 1]?.[j] || ".") + (matrix[i + 1]?.[j] || ".");
+              break;
+            }
+          }
+          if (didMove && wallStartShape !== wallEndShape) {
+            wallActive = false;
+          } else if (!didMove) {
+            wallActive = false;
+          }
+        }
       }
-      if (match.length && !wallActive) {
-        wallActive = true;
-        count += match.length;
-      } else if (match.length && wallActive) {
-        count += match.length;
-        wallActive = false;
-      } else if (match.length === 0 && wallActive) {
-        count++;
-      }
-    });
+    }
     result += count;
   });
+  console.log();
+  console.log(copy.map((e) => e.join("")).join("\n"));
+
   return result;
 }
 
@@ -117,6 +169,8 @@ function runTask(stage, filename, task, expected) {
 runTask("1", "sample", firstTask, 62);
 runTask("1", "full", firstTask, 47767);
 // 47767 too high
+// 47732 too high
 // 44575 too low
+// 44916 not
 // runTask("2", "sample", secondTask, 2);
 // runTask("2", "full", secondTask, 948);
